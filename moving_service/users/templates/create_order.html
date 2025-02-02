@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Order{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Create Order</h1>
+    <form method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        {{ order_form.as_p }}
+        {{ photo_form.as_p }}
+        
+        <!-- افزودن بخش نقشه -->
+        <div class="form-group">
+            <label for="origin_map">Select Origin</label>
+            <input type="text" id="origin_map" class="form-control" placeholder="Click on the map to select origin" readonly>
+            <div id="origin_map_canvas" style="height: 400px;"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="destination_map">Select Destination</label>
+            <input type="text" id="destination_map" class="form-control" placeholder="Click on the map to select destination" readonly>
+            <div id="destination_map_canvas" style="height: 400px;"></div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block mt-3">Submit Order</button>
+    </form>
+</div>
+<script>
+    function initMap() {
+        var originMap = L.map('origin_map_canvas').setView([51.505, -0.09], 13);
+        var destinationMap = L.map('destination_map_canvas').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(originMap).addTo(destinationMap);
+
+        var originMarker = L.marker([51.505, -0.09], {draggable: true}).addTo(originMap);
+        var destinationMarker = L.marker([51.505, -0.09], {draggable: true}).addTo(destinationMap);
+
+        originMarker.on('dragend', function(event) {
+            var position = originMarker.getLatLng();
+            document.getElementById('origin_map').value = position.lat + ',' + position.lng;
+        });
+
+        destinationMarker.on('dragend', function(event) {
+            var position = destinationMarker.getLatLng();
+            document.getElementById('destination_map').value = position.lat + ',' + position.lng;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+{% endblock %}
