@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1>Welcome to Moving Service</h1>
+    <p>Please choose an option:</p>
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'login' %}" class="btn btn-primary mx-2">Login</a>
+        <a href="{% url 'register_customer' %}" class="btn btn-success mx-2">Register as Customer</a>
+        <a href="{% url 'register_mover' %}" class="btn btn-info mx-2">Register as Mover</a>
+    </div>
+</div>
+{% endblock %}

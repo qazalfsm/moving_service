@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Mover Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Mover Dashboard</h1>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Items Detected</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.origin }}</td>
+                <td>{{ order.destination }}</td>
+                <td>
+                    <ul>
+                        {% for item in order.items_detected.all %}
+                        <li>{{ item.item_class }} - Confidence: {{ item.confidence }}%</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

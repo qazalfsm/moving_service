@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Mover Registration{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Mover Registration</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <!-- افزودن بخش نقشه -->
+        <div class="form-group">
+            <label for="location_map">Select Location</label>
+            <input type="text" id="location_map" class="form-control" placeholder="Click on the map to select location" readonly>
+            <div id="location_map_canvas" style="height: 400px;"></div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block mt-3">Register</button>
+    </form>
+</div>
+<script>
+    function initMap() {
+        var map = L.map('location_map_canvas').setView([51.505, -0.09], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([51.505, -0.09], {
+            draggable: true
+        }).addTo(map);
+
+        marker.on('dragend', function(event) {
+            var position = marker.getLatLng();
+            document.getElementById('location_map').value = position.lat + ',' + position.lng;
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+{% endblock %}

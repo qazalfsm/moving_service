@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Nearest Movers{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Nearest Movers</h1>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Mover Name</th>
+                <th>Vehicle Type</th>
+                <th>Mover Type</th>
+                <th>Distance (km)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mover, distance in nearest_movers %}
+            <tr>
+                <td>{{ mover.name }}</td>
+                <td>{{ mover.vehicle_type }}</td>
+                <td>{{ mover.mover_type }}</td>
+                <td>{{ distance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

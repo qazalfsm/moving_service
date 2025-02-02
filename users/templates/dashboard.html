@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Dashboard</h1>
+    <p class="text-center">Welcome to your dashboard!</p>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <a href="{% url 'create_order' %}" class="btn btn-primary btn-block">Create Order</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'order_list' %}" class="btn btn-success btn-block">View Orders</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'profile' %}" class="btn btn-info btn-block">Profile</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
